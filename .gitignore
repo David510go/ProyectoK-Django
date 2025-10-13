@@ -1,0 +1,17 @@
+# Entorno virtual
+myvenv/
+
+# Base de datos SQLite (opcional, puedes excluirla si quieres entregar el proyecto vacío)
+db.sqlite3
+
+# Archivos de caché
+__pycache__/
+*.pyc
+
+# Archivos temporales de macOS
+.DS_Store
+
+# Archivos de IDE
+.vscode/
+.idea/
+
