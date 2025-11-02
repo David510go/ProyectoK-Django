@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block content %}
+<h1>Clientes</h1>
+
+<form method="get">
+  <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Buscar por nombre o email" />
+  <button type="submit">Buscar</button>
+</form>
+
+<ul>
+  {% for c in clientes %}
+    <li>{{ c.nombre }} — {{ c.email }}</li>
+  {% empty %}
+    <li>No hay clientes visibles.</li>
+  {% endfor %}
+</ul>
+
+{% if is_paginated %}
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Siguiente</a>
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

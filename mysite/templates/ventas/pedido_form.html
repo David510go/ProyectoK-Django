@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Nuevo pedido{% endblock %}
+{% block content %}
+<h1>Nuevo pedido</h1>
+
+<form method="post">
+  {% csrf_token %}
+
+  <fieldset>
+    <legend>Datos del pedido</legend>
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+  </fieldset>
+
+  <fieldset>
+    <legend>Items</legend>
+    {{ formset.management_form }}
+
+    {# Errores globales del formset (como la suma de stock) #}
+    {% if formset.non_form_errors %}
+      <div style="color:red; white-space:pre-line;">
+        {{ formset.non_form_errors }}
+      </div>
+    {% endif %}
+
+    {% for f in formset %}
+      <div style="border:1px solid #ccc; padding:8px; margin:8px 0;">
+        {{ f.non_field_errors }}
+        <p>
+          {{ f.producto.label_tag }} {{ f.producto }}
+          {% if f.errors.producto %}<span style="color:red">{{ f.errors.producto }}</span>{% endif %}
+        </p>
+        <p>
+          {{ f.cantidad.label_tag }} {{ f.cantidad }}
+          {% if f.errors.cantidad %}<span style="color:red">{{ f.errors.cantidad }}</span>{% endif %}
+        </p>
+        <p>
+          {{ f.precio_unitario.label_tag }} {{ f.precio_unitario }}
+          {% if f.errors.precio_unitario %}<span style="color:red">{{ f.errors.precio_unitario }}</span>{% endif %}
+        </p>
+        {% if f.instance.pk %}{{ f.DELETE }} Eliminar{% endif %}
+      </div>
+    {% endfor %}
+  </fieldset>
+
+  <button type="submit">Guardar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Pedidos{% endblock %}
+{% block content %}
+<h1>Pedidos</h1>
+<p><a href="{% url 'pedido_create' %}">Nuevo pedido</a></p>
+<table>
+  <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Estado</th><th>Total</th></tr></thead>
+  <tbody>
+  {% for p in pedidos %}
+    <tr>
+      <td><a href="{% url 'pedido_detail' p.pk %}">#{{ p.id }}</a></td>
+      <td>{{ p.cliente }}</td>
+      <td>{{ p.fecha }}</td>
+      <td>{{ p.estado }}</td>
+      <td>${{ p.total }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5">No hay pedidos.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
